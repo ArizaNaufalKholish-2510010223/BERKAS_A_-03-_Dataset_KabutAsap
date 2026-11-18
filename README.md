@@ -74,3 +74,4 @@ Setiap anggota melakukan commit dan push menggunakan akun GitHub masing-masing. 
 ## Lisensi
 
 Teks lisensi MIT tersedia di berkas [LICENSE](LICENSE). Penggunaan citra dari pihak ketiga mengikuti ketentuan izin atau lisensi dari sumber masing-masing.
+hi apakah ini tersedia
