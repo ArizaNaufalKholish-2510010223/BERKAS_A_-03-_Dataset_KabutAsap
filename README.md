@@ -75,6 +75,9 @@ python cek_dataset.py
 
 [Skrip pemeriksaan](cek_dataset.py) memeriksa berkas gambar, baris CSV, kesesuaian label dengan folder, kesesuaian estimasi yang terisi dengan subfolder, dan target minimum. Kesesuaian visual ketebalan dinilai dengan pedoman pelabelan di atas.
 
+## platform data Kaggle
+https://www.kaggle.com/datasets/arizakholish/klasifikasi-ketebalan-kabut-asap-kelompok-3/data
+
 ## Lisensi
 
 Repositori mencantumkan MIT License, hak cipta 2026 Ariza. [Teks lisensi](LICENSE)
