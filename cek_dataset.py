@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parent
 DATASET = ROOT / "dataset"
 MINIMUM = 150
 KELAS = ("tipis", "sedang", "tebal")
-EKSTENSI = {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif", ".tif", ".tiff"}
+EKSTENSI = {".jpg", ".jpeg", ".png", ".webp", ".avif", ".bmp", ".gif", ".tif", ".tiff"}
 
 
 def baca_label(gambar, masalah):
@@ -19,14 +19,19 @@ def baca_label(gambar, masalah):
 
     with (ROOT / "metadata.csv").open(encoding="utf-8-sig", newline="") as file:
         baris_csv = csv.DictReader(file, strict=True)
-        if not {"file_path", "kelas"}.issubset(baris_csv.fieldnames or []):
-            raise ValueError("Kolom file_path dan kelas wajib ada.")
+        kolom = set(baris_csv.fieldnames or [])
+        if {"path", "ketebalan_asap"} <= kolom:
+            kolom_path, kolom_kelas = "path", "ketebalan_asap"
+        elif {"file_path", "kelas"} <= kolom:
+            kolom_path, kolom_kelas = "file_path", "kelas"
+        else:
+            raise ValueError("CSV memerlukan path dan ketebalan_asap, atau file_path dan kelas.")
 
         for baris in baris_csv:
             nomor = baris_csv.line_num
-            lokasi = (baris.get("file_path") or "").strip().replace("\\", "/")
+            lokasi = (baris.get(kolom_path) or "").strip().replace("\\", "/")
             lokasi = lokasi.removeprefix("./")
-            kelas = (baris.get("kelas") or "").strip().casefold()
+            kelas = (baris.get(kolom_kelas) or "").strip().casefold()
 
             if lokasi in tercatat:
                 masalah.append(f"Baris {nomor} duplikat: {lokasi}")
@@ -40,9 +45,14 @@ def baca_label(gambar, masalah):
                 masalah.append(f"Kelas kosong atau tidak valid: {lokasi}")
                 continue
 
-            folder_kelas = gambar[lokasi].relative_to(DATASET).parts[0].casefold()
+            bagian = gambar[lokasi].relative_to(DATASET).parts
+            folder_kelas = bagian[0].casefold()
             if folder_kelas in KELAS and folder_kelas != kelas:
                 masalah.append(f"Label berbeda dari folder kelas: {lokasi} ({kelas})")
+                continue
+            jarak = (baris.get("jarak_pandang") or "").strip()
+            if jarak and (len(bagian) < 3 or jarak != bagian[1]):
+                masalah.append(f"Estimasi jarak berbeda dari subfolder: {lokasi} ({jarak})")
                 continue
             label[lokasi] = kelas
 
