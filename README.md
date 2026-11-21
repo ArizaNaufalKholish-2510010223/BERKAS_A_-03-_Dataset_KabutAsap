@@ -44,13 +44,13 @@ Setiap kelas memiliki subfolder `kurang_dari_100`, `100-500`, dan `lebih_dari_50
 |---|---|
 | `path` | Jalur relatif terhadap direktori utama repositori, termasuk nama dan ekstensi berkas. |
 | `ketebalan_asap` | Label yang tercatat di folder kelas, yaitu `Tipis`, `Sedang`, atau `Tebal`. |
-| `jarak_pandang` | Estimasi dari subfolder, yaitu `kurang_dari_100`, `100-500`, atau `lebih_dari_500`. Nilai kosong berarti rentang belum dapat ditentukan. |
+| `jarak_pandang` | Nama subfolder jarak pada `path`, yaitu `kurang_dari_100`, `100-500`, atau `lebih_dari_500`. Setiap baris mengikuti lokasi berkasnya. |
 
 Contoh baris dari manifes sebenarnya
 
 ```csv
 path,ketebalan_asap,jarak_pandang
-dataset/Tipis/kurang_dari_100/01_dekat.jpg,Tipis,
+dataset/Tipis/kurang_dari_100/01_dekat.jpg,Tipis,kurang_dari_100
 dataset/Sedang/kurang_dari_100/05_dekat.png,Sedang,kurang_dari_100
 dataset/Tebal/kurang_dari_100/05_dekat.jpeg,Tebal,kurang_dari_100
 ```
@@ -58,7 +58,7 @@ dataset/Tebal/kurang_dari_100/05_dekat.jpeg,Tebal,kurang_dari_100
 ## Hasil pemeriksaan dan batasan data
 
 - **Ketebalan.** Peninjauan visual terhadap 312 berkas menemukan 116 yang tampak sesuai dengan kelas folder, 115 yang cenderung menyerupai kelas lain, dan 81 yang belum cukup jelas untuk diputuskan. Sebanyak 29 gambar unik memiliki salinan identik di kelas ketebalan berbeda. Manifes mempertahankan label folder agar setiap baris dapat ditelusuri ke berkas sumber.
-- **Jarak pandang.** Sebanyak 185 baris memuat estimasi dari subfolder. Pada 127 baris yang mewakili 49 gambar unik, salinan identik ditemukan di subfolder dengan rentang berbeda. Kolom `jarak_pandang` untuk semua salinan tersebut dikosongkan. Belum ada pengukuran jarak yang mengonfirmasi rentang per foto.
+- **Jarak pandang.** Seluruh 312 baris mencatat rentang sesuai subfolder masing-masing. Ada 92 berkas di `kurang_dari_100`, 186 di `100-500`, dan 34 di `lebih_dari_500`. Sebanyak 49 gambar unik memiliki salinan di beberapa rentang (127 berkas). Setiap salinan mengikuti subfolder tempatnya disimpan. Jarak pandang sebenarnya belum dikonfirmasi melalui pengukuran.
 
 ## Cara menggunakan dan memeriksa dataset
 
